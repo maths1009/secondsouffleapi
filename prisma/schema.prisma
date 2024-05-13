@@ -1,0 +1,53 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model products {
+  id            Int        @id @default(autoincrement())
+  id_sale_point Int
+  name          String     @db.VarChar(100)
+  picture       Bytes      @db.Blob
+  quantity      Int
+  color         String     @db.VarChar(8)
+  material      String     @db.VarChar(100)
+  description   String     @db.Text
+  salespoint    salespoint @relation(fields: [id_sale_point], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "id_sale_point")
+
+  @@index([id_sale_point], map: "id_sale_point")
+}
+
+model roles {
+  id    Int     @id @default(autoincrement())
+  name  String  @db.VarChar(100)
+  users users[]
+}
+
+model salespoint {
+  id       Int        @id @default(autoincrement())
+  name     String     @db.VarChar(100)
+  y        Float      @db.Float
+  x        Float      @db.Float
+  products products[]
+  users    users[]
+}
+
+model users {
+  id             Int        @id @default(autoincrement())
+  id_sales_point Int
+  id_role        Int
+  name           String     @db.VarChar(100)
+  email          String     @db.VarChar(150)
+  password       String     @db.VarChar(255)
+  profilePicture Bytes      @db.Blob
+  createdAt      DateTime   @db.Timestamp(0)
+  roles          roles      @relation(fields: [id_role], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "id_role")
+  salespoint     salespoint @relation(fields: [id_sales_point], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "id_sales_point")
+
+  @@index([id_role], map: "id_role")
+  @@index([id_sales_point], map: "id_sales_point")
+}
