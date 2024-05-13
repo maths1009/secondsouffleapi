@@ -10,6 +10,10 @@ app.get("/", (_, res: Response) => {
   res.send("Hello World!");
 });
 
+app.use((_, res: Response, __) => {
+  res.status(404).json({ message: "Not Found" });
+});
+
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
