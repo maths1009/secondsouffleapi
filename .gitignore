@@ -1,0 +1,17 @@
+# Directories
+node_modules/
+dist/
+build/
+coverage/
+
+# Files
+.env
+.DS_Store
+*.log
+
+# Editor files
+.vscode/
+*.code-workspace
+
+# Configuration files
+.env
