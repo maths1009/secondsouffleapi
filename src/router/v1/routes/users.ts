@@ -1,9 +1,10 @@
 import { Router } from "express";
 import { prisma } from "../../../app";
+import { authenticateUser } from "../../../utils/auth";
 
 const router = Router();
 
-router.get("/", async (_, res) => {
+router.get("/", authenticateUser, async (_, res) => {
   try {
     const users = await prisma.users.findMany();
     if (!users.length) {
