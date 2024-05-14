@@ -1,6 +1,6 @@
 import { Router } from "express";
 
-import { authenticateUser } from "../../../../utils/auth";
+import { authenticateUser } from "@utils/auth";
 
 const router = Router();
 

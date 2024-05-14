@@ -1,6 +1,6 @@
 import { Router, Request, Response } from "express";
-import { prisma } from "../../../../app";
-import { comparePassword, generateToken } from "../../../../utils/auth";
+import { prisma } from "@/app";
+import { comparePassword, generateToken } from "@utils/auth";
 
 const router = Router();
 
