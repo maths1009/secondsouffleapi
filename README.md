@@ -50,7 +50,32 @@ npm run build
 npm run dev
 ```
 
+👷Run test
+
+```bash
+npm run test
+```
+
 🌐 The application by default runs on port 3000.
+
+## Informations
+
+### Formatting
+
+📚 The project uses Prettier for code formatting with a specific sort order. Prettier helps maintain a consistent code style across the project, making it easier to read and understand the codebase.
+To format the code using Prettier, run the following command:
+
+```bash
+npm run format
+```
+
+### ORM and Database
+
+🔒 The project uses Prisma as an ORM to interact with the database. Prisma provides a type-safe way to interact with the database, making it easier to write queries and manage the database schema.
+
+### Authentication
+
+🔐 The project uses JWT (JSON Web Tokens) for authentication. When a user logs in, a JWT is generated and sent to the client. The client must include this token in the headers of each request to access protected routes.
 
 ## Contributing
 
@@ -61,6 +86,7 @@ npm run dev
 🛠️ - Node.js (version 20.9.0)
 🚀 - Express (version 4.19.2)
 💻 - TypeScript (version 5.4.5)
+🔒 - Prisma (version 5.13.0)
 
 ---
 
