@@ -12,6 +12,3 @@ coverage/
 # Editor files
 .vscode/
 *.code-workspace
-
-# Configuration files
-.env
