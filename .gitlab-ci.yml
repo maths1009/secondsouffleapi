@@ -14,5 +14,6 @@ install_dependencies:
 
 run_tests:
   stage: test
+  parallel: 1
   script:
     - npm run test
