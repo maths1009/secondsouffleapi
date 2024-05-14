@@ -1,7 +1,7 @@
-import jwt from 'jsonwebtoken'
 import bcrypt from 'bcryptjs'
-import { Request, Response, NextFunction } from 'express'
 import dotenv from 'dotenv'
+import { NextFunction, Request, Response } from 'express'
+import jwt from 'jsonwebtoken'
 
 dotenv.config()
 

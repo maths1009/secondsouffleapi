@@ -1,4 +1,5 @@
 import { Router } from 'express'
+
 import loginRoute from './routes/login'
 import logoutRoute from './routes/logout'
 

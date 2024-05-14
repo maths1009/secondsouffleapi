@@ -1,8 +1,10 @@
-import express, { Express, Response } from 'express'
-import Router from './router'
-import * as dotenv from 'dotenv'
 import { PrismaClient } from '@prisma/client'
+
 import bodyParser from 'body-parser'
+import * as dotenv from 'dotenv'
+import express, { Express, Response } from 'express'
+
+import Router from './router'
 
 dotenv.config()
 

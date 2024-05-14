@@ -1,11 +1,12 @@
-import jwt, { JwtPayload } from 'jsonwebtoken'
 import bcrypt from 'bcryptjs'
-import { Request, Response, NextFunction } from 'express'
+import { NextFunction, Request, Response } from 'express'
+import jwt, { JwtPayload } from 'jsonwebtoken'
+
 import {
+  authenticateUser,
+  comparePassword,
   generateToken,
   hashPassword,
-  comparePassword,
-  authenticateUser,
 } from './index'
 
 describe('Auth Utils', () => {

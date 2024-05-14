@@ -1,5 +1,6 @@
 import { prisma } from '@/app'
-import { comparePassword, generateToken } from '@/utils/auth'
+import { comparePassword, generateToken } from '@/utils/Auth'
+
 import { Request, Response } from 'express'
 
 export const authController = {
