@@ -3,8 +3,6 @@ import dotenv from 'dotenv'
 import { NextFunction, Request, Response } from 'express'
 import jwt from 'jsonwebtoken'
 
-dotenv.config()
-
 export const generateToken = (userId: string) => {
   return jwt.sign({ userId }, process.env.JWT_SECRET!, {
     expiresIn: process.env.JWT_DURATION!,
