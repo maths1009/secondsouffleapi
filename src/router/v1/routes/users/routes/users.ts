@@ -6,6 +6,7 @@ import { userController } from '../controller'
 
 const router = Router()
 
+//TODO add Authrization middleware
 router.post('/', authenticateUser, userController.addUser)
 
 export default router

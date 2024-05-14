@@ -1,4 +1,4 @@
-import { NextFunction, Request, Response } from 'express'
+import { NextFunction, Request, RequestHandler, Response } from 'express'
 import jwt from 'jsonwebtoken'
 
 /**
@@ -31,5 +31,17 @@ export const authenticateUser = (
     return res
       .status(401)
       .json({ message: 'Unauthorized access - Invalid token' })
+  }
+}
+
+export const authorize = (role: Role): RequestHandler => {
+  return (req, res, next) => {
+    const userRole = null
+    if (userRole !== role) {
+      return res
+        .status(403)
+        .json({ message: 'Access denied. Insufficient role.' })
+    }
+    next()
   }
 }

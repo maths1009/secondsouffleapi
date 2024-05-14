@@ -1,5 +1,4 @@
 import bcrypt from 'bcryptjs'
-import { NextFunction, Request, Response } from 'express'
 import jwt from 'jsonwebtoken'
 
 /**
@@ -7,8 +6,8 @@ import jwt from 'jsonwebtoken'
  * @param userId - The ID of the user.
  * @returns The generated JWT token.
  */
-export const generateToken = (userId: string) => {
-  return jwt.sign({ userId }, process.env.JWT_SECRET!, {
+export const generateToken = (userId: string, userRoles: Role[]) => {
+  return jwt.sign({ userId, userRoles }, process.env.JWT_SECRET!, {
     expiresIn: process.env.JWT_DURATION!,
   })
 }
