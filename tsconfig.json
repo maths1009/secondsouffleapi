@@ -10,7 +10,8 @@
     "paths": {
       "@/*": ["./*"],
       "@routes/*": ["routes/*"],
-      "@utils/*": ["utils/*"]
+      "@utils/*": ["utils/*"],
+      "@middlewares/*": ["middlewares/*"]
     }
   },
   "include": ["src/**/*"],

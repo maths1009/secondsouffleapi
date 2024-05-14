@@ -1,5 +1,6 @@
+import { comparePassword, generateToken } from '@utils/auth'
+
 import { prisma } from '@/app'
-import { comparePassword, generateToken } from '@/utils/Auth'
 
 import { Request, Response } from 'express'
 

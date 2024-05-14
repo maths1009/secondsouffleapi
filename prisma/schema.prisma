@@ -11,7 +11,7 @@ model products {
   id            Int        @id @default(autoincrement())
   id_sale_point Int
   name          String     @db.VarChar(100)
-  picture       Bytes      @db.Blob
+  picture       Bytes      @db.MediumBlob
   quantity      Int
   color         String     @db.VarChar(8)
   material      String     @db.VarChar(100)
@@ -43,7 +43,7 @@ model users {
   name           String     @db.VarChar(100)
   email          String     @db.VarChar(150)
   password       String     @db.VarChar(255)
-  profilePicture Bytes      @db.Blob
+  profilePicture Bytes      @db.MediumBlob
   createdAt      DateTime   @db.Timestamp(0)
   roles          roles      @relation(fields: [id_role], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "id_role")
   salespoint     salespoint @relation(fields: [id_sales_point], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "id_sales_point")
