@@ -9,7 +9,6 @@ cache:
 
 run_tests:
   stage: test
-  parallel: 1
   script:
     - npm ci
     - npm run test
