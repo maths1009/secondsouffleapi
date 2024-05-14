@@ -1,6 +1,6 @@
 import { Router } from "express";
-import loginRoute from "./login";
-import logoutRoute from "./logout";
+import loginRoute from "./routes/login";
+import logoutRoute from "./routes/logout";
 
 const router = Router();
 
