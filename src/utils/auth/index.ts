@@ -1,3 +1,5 @@
+import { Role, Token } from '@type/auth'
+
 import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
 
@@ -6,10 +8,34 @@ import jwt from 'jsonwebtoken'
  * @param userId - The ID of the user.
  * @returns The generated JWT token.
  */
-export const generateToken = (userId: string, userRoles: Role[]) => {
-  return jwt.sign({ userId, userRoles }, process.env.JWT_SECRET!, {
+export const generateToken = (userId: string, userRole: Role) => {
+  return jwt.sign({ userId, userRole }, process.env.JWT_SECRET!, {
     expiresIn: process.env.JWT_DURATION!,
   })
+}
+
+type isValid = {
+  decodedToken: Token
+  isValid: true
+}
+type isNotValid = {
+  decodedToken: undefined
+  isValid: false
+}
+type checkTokenReturn = isValid | isNotValid
+
+/**
+ * Checks the validity of a JWT token.
+ * @param token - The JWT token to be checked.
+ * @returns An object containing the decoded token and a flag indicating its validity.
+ */
+export const checkToken = (token: string): checkTokenReturn => {
+  try {
+    const decodedToken = jwt.verify(token, process.env.JWT_SECRET!) as Token
+    return { decodedToken, isValid: true }
+  } catch (error) {
+    return { decodedToken: undefined, isValid: false }
+  }
 }
 
 /**

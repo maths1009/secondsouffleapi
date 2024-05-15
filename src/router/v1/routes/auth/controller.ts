@@ -2,6 +2,8 @@ import { comparePassword, generateToken } from '@utils/auth'
 
 import { prisma } from '@/app'
 
+import { Role } from '@type/auth'
+
 import { Request, Response } from 'express'
 
 export const authController = {
@@ -15,7 +17,9 @@ export const authController = {
     const userRole = await prisma.roles.findFirst({
       where: { id: user!.id_role },
     })
-    const token = generateToken(user!.id.toString(), [userRole!.name as Role])
+    const role = Role[userRole!.name as keyof typeof Role]
+    if (!role) return res.status(401).json({ message: 'invalid role' })
+    const token = generateToken(user!.id.toString(), role)
     res.json({ token })
   },
   logout: async (req: Request, res: Response) => {

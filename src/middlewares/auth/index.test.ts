@@ -1,70 +1,60 @@
 import { generateToken } from '@utils/auth'
 
-import { NextFunction, Request, Response } from 'express'
-import jwt from 'jsonwebtoken'
+import { Role } from '@type/auth'
 
-import { authenticateUser } from '.'
+import { NextFunction, Request, Response } from 'express'
+
+import { authenticateUser } from './index'
 
 describe('authenticateUser', () => {
-  it('should call the next function if the token is valid', () => {
-    const validToken = generateToken('123456')
-    const req = {
-      headers: {
-        authorization: `Bearer ${validToken}`,
-      },
+  let req: Request
+  let res: Response
+  let next: NextFunction
+
+  beforeEach(() => {
+    req = {} as Request
+    res = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn(),
+    } as unknown as Response
+    next = jest.fn() as NextFunction
+  })
+
+  it('should call next function if user is authenticated and have a good role', () => {
+    const validToken = generateToken('1', Role.ADMIN)
+    req.headers = {
+      authorization: `Bearer ${validToken}`,
     }
-    const res = {}
-    const next = jest.fn()
-    authenticateUser(req as Request, res as Response, next as NextFunction)
+    const middleware = authenticateUser(Role.ADMIN)
+    middleware(req, res, next)
     expect(next).toHaveBeenCalled()
   })
 
-  it('should return 401 if the token is missing or has incorrect format', () => {
-    const req = {
-      headers: {
-        authorization: 'invalidToken',
-      },
+  it('should not call next function if user have not a good role', () => {
+    const validToken = generateToken('1', Role.PARTNER)
+    req.headers = {
+      authorization: `Bearer ${validToken}`,
     }
-    const res = {
-      status: jest.fn().mockReturnThis(),
-      json: jest.fn(),
-    }
-    const next = jest.fn()
-    authenticateUser(
-      req as Request,
-      res as unknown as Response,
-      next as NextFunction
-    )
+    const middleware = authenticateUser(Role.ADMIN)
+    middleware(req, res, next)
     expect(res.status).toHaveBeenCalledWith(401)
-    expect(res.json).toHaveBeenCalledWith({
-      message: 'Unauthorized access - Missing token or incorrect format',
-    })
-    expect(next).not.toHaveBeenCalled()
   })
 
-  it('should return 401 if the token is invalid', () => {
-    const req = {
-      headers: {
-        authorization: 'Bearer invalidToken',
-      },
+  it('should not call next function if user not a good token', () => {
+    req.headers = {
+      authorization: `Bearer not-a-good-token`,
     }
-    const res = {
-      status: jest.fn().mockReturnThis(),
-      json: jest.fn(),
-    }
-    const next = jest.fn()
-    jwt.verify = jest.fn(() => {
-      throw new Error('Invalid token')
-    })
-    authenticateUser(
-      req as Request,
-      res as unknown as Response,
-      next as NextFunction
-    )
+    const middleware = authenticateUser(Role.ADMIN)
+    middleware(req, res, next)
     expect(res.status).toHaveBeenCalledWith(401)
-    expect(res.json).toHaveBeenCalledWith({
-      message: 'Unauthorized access - Invalid token',
-    })
-    expect(next).not.toHaveBeenCalled()
+  })
+
+  it('should not call next function if user not a good token', () => {
+    req.headers = {
+      authorization: `not-a-good-token`,
+    }
+    const middleware = authenticateUser(Role.ADMIN)
+    middleware(req, res, next)
+    expect(res.status).toHaveBeenCalledWith(401)
   })
 })

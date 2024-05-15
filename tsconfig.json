@@ -7,12 +7,12 @@
     "esModuleInterop": true,
     "rootDir": "./src",
     "baseUrl": "./src",
-    "typeRoots": ["./src/types"],
     "paths": {
-      "@/*": ["./*"],
       "@routes/*": ["routes/*"],
       "@utils/*": ["utils/*"],
-      "@middlewares/*": ["middlewares/*"]
+      "@middlewares/*": ["middlewares/*"],
+      "@type/*": ["types/*"],
+      "@/*": ["./*"]
     }
   },
   "include": ["src/**/*"],

@@ -6,4 +6,8 @@ module.exports = {
   testRegex: '(/__tests__/.*|(\\.|/)(test|spec))\\.tsx?$',
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
   setupFiles: ['./setup-tests.ts'],
+  moduleNameMapper: {
+    '@type/(.*)': '<rootDir>/src/types/$1',
+    '@utils/(.*)': '<rootDir>/src/utils/$1',
+  },
 }
