@@ -31,7 +31,10 @@ type checkTokenReturn = isValid | isNotValid
  */
 export const checkToken = (token: string): checkTokenReturn => {
   try {
-    const decodedToken = jwt.verify(token, process.env.JWT_SECRET!) as Token
+    const decodedToken = jwt.verify(
+      token.split(' ')[1],
+      process.env.JWT_SECRET!
+    ) as Token
     return { decodedToken, isValid: true }
   } catch (error) {
     return { decodedToken: undefined, isValid: false }
