@@ -19,19 +19,42 @@
 CREATE DATABASE IF NOT EXISTS `secondsouffle` /*!40100 DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci */;
 USE `secondsouffle`;
 
+-- Listage de la structure de la table secondsouffle. j_sales_products
+CREATE TABLE IF NOT EXISTS `j_sales_products` (
+  `id_sales_point` int(11) NOT NULL,
+  `id_products` int(11) NOT NULL,
+  PRIMARY KEY (`id_products`,`id_sales_point`) USING BTREE,
+  KEY `FK` (`id_sales_point`) USING BTREE,
+  KEY `FK2` (`id_products`) USING BTREE,
+  CONSTRAINT `FK_id_products` FOREIGN KEY (`id_products`) REFERENCES `products` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
+  CONSTRAINT `FK_id_sales_points` FOREIGN KEY (`id_sales_point`) REFERENCES `salespoint` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+-- Les données exportées n'étaient pas sélectionnées.
+
+-- Listage de la structure de la table secondsouffle. j_sales_users
+CREATE TABLE IF NOT EXISTS `j_sales_users` (
+  `id_users` int(11) NOT NULL,
+  `id_sales_point` int(11) NOT NULL,
+  PRIMARY KEY (`id_users`,`id_sales_point`),
+  KEY `FK` (`id_sales_point`) USING BTREE,
+  KEY `FK2` (`id_users`) USING BTREE,
+  CONSTRAINT `FK_id_sales_point` FOREIGN KEY (`id_sales_point`) REFERENCES `salespoint` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
+  CONSTRAINT `FK_id_users` FOREIGN KEY (`id_users`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+-- Les données exportées n'étaient pas sélectionnées.
+
 -- Listage de la structure de la table secondsouffle. products
 CREATE TABLE IF NOT EXISTS `products` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `id_sale_point` int(11) NOT NULL,
   `name` varchar(100) NOT NULL,
-  `picture` blob NOT NULL,
+  `picture` mediumblob NOT NULL,
   `quantity` int(11) NOT NULL,
   `color` varchar(8) NOT NULL,
   `material` varchar(100) NOT NULL,
   `description` text NOT NULL,
-  PRIMARY KEY (`id`) USING BTREE,
-  KEY `id_sale_point` (`id_sale_point`),
-  CONSTRAINT `id_sale_point` FOREIGN KEY (`id_sale_point`) REFERENCES `salespoint` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  PRIMARY KEY (`id`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- Les données exportées n'étaient pas sélectionnées.
@@ -59,18 +82,12 @@ CREATE TABLE IF NOT EXISTS `salespoint` (
 -- Listage de la structure de la table secondsouffle. users
 CREATE TABLE IF NOT EXISTS `users` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `id_sales_point` int(11) NOT NULL,
-  `id_role` int(11) NOT NULL,
   `name` varchar(100) NOT NULL,
   `email` varchar(150) NOT NULL,
   `password` varchar(255) NOT NULL,
-  `profilePicture` blob NOT NULL,
+  `profilePicture` mediumblob NOT NULL,
   `createdAt` timestamp NOT NULL,
-  PRIMARY KEY (`id`) USING BTREE,
-  KEY `id_sales_point` (`id_sales_point`),
-  KEY `id_role` (`id_role`),
-  CONSTRAINT `id_role` FOREIGN KEY (`id_role`) REFERENCES `roles` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `id_sales_point` FOREIGN KEY (`id_sales_point`) REFERENCES `salespoint` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  PRIMARY KEY (`id`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- Les données exportées n'étaient pas sélectionnées.

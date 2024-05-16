@@ -8,46 +8,58 @@ datasource db {
 }
 
 model products {
-  id            Int        @id @default(autoincrement())
-  id_sale_point Int
-  name          String     @db.VarChar(100)
-  picture       Bytes      @db.MediumBlob
-  quantity      Int
-  color         String     @db.VarChar(8)
-  material      String     @db.VarChar(100)
-  description   String     @db.Text
-  salespoint    salespoint @relation(fields: [id_sale_point], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "id_sale_point")
-
-  @@index([id_sale_point], map: "id_sale_point")
+  id               Int                @id @default(autoincrement())
+  name             String             @db.VarChar(100)
+  picture          Bytes              @db.MediumBlob
+  quantity         Int
+  color            String             @db.VarChar(8)
+  material         String             @db.VarChar(100)
+  description      String             @db.Text
+  j_sales_products j_sales_products[]
 }
 
 model roles {
-  id    Int     @id @default(autoincrement())
-  name  String  @db.VarChar(100)
-  users users[]
+  id   Int    @id @default(autoincrement())
+  name String @db.VarChar(100)
 }
 
 model salespoint {
-  id       Int        @id @default(autoincrement())
-  name     String     @db.VarChar(100)
-  y        Float      @db.Float
-  x        Float      @db.Float
-  products products[]
-  users    users[]
+  id               Int                @id @default(autoincrement())
+  name             String             @db.VarChar(100)
+  y                Float              @db.Float
+  x                Float              @db.Float
+  j_sales_products j_sales_products[]
+  j_sales_users    j_sales_users[]
 }
 
 model users {
-  id             Int        @id @default(autoincrement())
-  id_sales_point Int
-  id_role        Int
-  name           String     @db.VarChar(100)
-  email          String     @db.VarChar(150)
-  password       String     @db.VarChar(255)
-  profilePicture Bytes      @db.MediumBlob
-  createdAt      DateTime   @db.Timestamp(0)
-  roles          roles      @relation(fields: [id_role], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "id_role")
-  salespoint     salespoint @relation(fields: [id_sales_point], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "id_sales_point")
+  id             Int             @id @default(autoincrement())
+  name           String          @db.VarChar(100)
+  email          String          @db.VarChar(150)
+  password       String          @db.VarChar(255)
+  profilePicture Bytes           @db.MediumBlob
+  createdAt      DateTime        @db.Timestamp(0)
+  j_sales_users  j_sales_users[]
+}
 
-  @@index([id_role], map: "id_role")
-  @@index([id_sales_point], map: "id_sales_point")
+model j_sales_products {
+  id_sales_point Int
+  id_products    Int
+  products       products   @relation(fields: [id_products], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "FK_id_products")
+  salespoint     salespoint @relation(fields: [id_sales_point], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "FK_id_sales_points")
+
+  @@id([id_products, id_sales_point])
+  @@index([id_sales_point], map: "FK")
+  @@index([id_products], map: "FK2")
+}
+
+model j_sales_users {
+  id_users       Int
+  id_sales_point Int
+  salespoint     salespoint @relation(fields: [id_sales_point], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "FK_id_sales_point")
+  users          users      @relation(fields: [id_users], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "FK_id_users")
+
+  @@id([id_users, id_sales_point])
+  @@index([id_sales_point], map: "FK")
+  @@index([id_users], map: "FK2")
 }
