@@ -24,7 +24,7 @@ app.use(Router)
 
 //404
 app.use((_, res: Response, __) => {
-  res.status(404).json({ message: 'Not Found' })
+  res.status(404).json({ message: 'Route not Found' })
 })
 
 //Start

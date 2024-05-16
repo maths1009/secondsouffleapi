@@ -29,6 +29,6 @@ export const salesPointController = {
         },
       },
     })
-    res.json(productsData)
+    res.json({ message: productsData })
   },
 }

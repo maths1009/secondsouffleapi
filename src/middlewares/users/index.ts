@@ -17,7 +17,8 @@ export const checkUserId: RequestHandler = (
   next: NextFunction
 ) => {
   const { id } = req.params
-  const { decodedToken } = checkToken(req.headers.authorization!) // Is valid token because, the middleware already check the token
+  const { decodedToken } = checkToken(req.headers.authorization!.split(' ')[1]) // Is valid token because, the middleware already check the token
+  console.log(id, decodedToken)
   if (id !== decodedToken?.userId) {
     return res.status(401).json({ message: 'Unauthorized' })
   }

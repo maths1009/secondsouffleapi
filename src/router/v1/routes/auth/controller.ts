@@ -20,7 +20,7 @@ export const authController = {
     const role = Role[userRole!.name as keyof typeof Role]
     if (!role) return res.status(401).json({ message: 'invalid role' })
     const token = generateToken(user!.id.toString(), role)
-    res.json({ token })
+    res.json({ message: token })
   },
   logout: async (req: Request, res: Response) => {
     res.json({ message: 'logout success' })

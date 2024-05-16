@@ -6,22 +6,32 @@ import { Request, Response } from 'express'
 
 export const userController = {
   addUser: async (req: Request, res: Response) => {
-    const { email, password, idRole, idSalesPoint, name, profilePicture } =
-      req.body
-    const existingUser = await prisma.users.findFirst({
-      where: { email },
-    })
-    if (existingUser) {
+    const { email, password, idRole, idSalesPoint, name } = req.body
+
+    // Check if email already exists
+    const existingUser = await prisma.users.findFirst({ where: { email } })
+    if (existingUser)
       return res.status(400).json({ message: 'Email already exists' })
-    }
+
+    // Check if role exists
+    const existingRole = await prisma.roles.findFirst({ where: { id: idRole } })
+    if (!existingRole)
+      return res.status(400).json({ message: 'Role does not exist' })
+
+    // Check if sales point exists
+    const existingSalesPoint = await prisma.salespoint.findFirst({
+      where: { id: idSalesPoint },
+    })
+    if (!existingSalesPoint)
+      return res.status(400).json({ message: 'Sales point does not exist' })
+
     const user = await prisma.users.create({
       data: {
         email,
         password: await hashPassword(password),
         id_roles: idRole,
         name,
-        profilePicture,
-        createdAt: new Date().getTime().toString(),
+        createdAt: new Date().toISOString(),
       },
     })
 
@@ -32,7 +42,7 @@ export const userController = {
       },
     })
 
-    res.json(user)
+    res.json({ message: user })
   },
   getUserSalesPointById: async (req: Request, res: Response) => {
     const { id } = req.params
@@ -55,7 +65,7 @@ export const userController = {
       },
     })
 
-    res.json(salesPoint)
+    res.json({ message: salesPoint })
   },
   updateUser: async (req: Request, res: Response) => {
     const { id } = req.params
@@ -70,6 +80,6 @@ export const userController = {
       },
     })
 
-    res.json(user)
+    res.json({ message: user })
   },
 }

@@ -39,7 +39,7 @@ model users {
   name           String          @db.VarChar(100)
   email          String          @db.VarChar(150)
   password       String          @db.VarChar(255)
-  profilePicture Bytes           @db.MediumBlob
+  profilePicture Bytes?          @db.MediumBlob
   createdAt      DateTime        @db.Timestamp(0)
   j_sales_users  j_sales_users[]
   roles          roles           @relation(fields: [id_roles], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "FK")
