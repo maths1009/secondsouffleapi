@@ -15,7 +15,7 @@ export const authController = {
       return res.status(401).json({ message: 'incorrect email or password' })
     }
     const userRole = await prisma.roles.findFirst({
-      where: { id: user!.id_role },
+      where: { id: user!.id_roles },
     })
     const role = Role[userRole!.name as keyof typeof Role]
     if (!role) return res.status(401).json({ message: 'invalid role' })

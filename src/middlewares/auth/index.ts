@@ -20,11 +20,10 @@ export const authenticateUser = (role?: Role): RequestHandler => {
         message: 'Unauthorized access - Missing token or incorrect format',
       })
     }
-    const decodedToken = checkToken(authorizationHeader.split(' ')[1])
-    if (
-      !decodedToken.isValid ||
-      (role && decodedToken.decodedToken.userRole !== role)
-    ) {
+    const { decodedToken, isValid } = checkToken(
+      authorizationHeader.split(' ')[1]
+    )
+    if (!isValid || (role && decodedToken.userRole !== role)) {
       return res
         .status(401)
         .json({ message: 'Unauthorized access - Invalid token' })

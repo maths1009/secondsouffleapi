@@ -82,12 +82,15 @@ CREATE TABLE IF NOT EXISTS `salespoint` (
 -- Listage de la structure de la table secondsouffle. users
 CREATE TABLE IF NOT EXISTS `users` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id_roles` int(11) NOT NULL,
   `name` varchar(100) NOT NULL,
   `email` varchar(150) NOT NULL,
   `password` varchar(255) NOT NULL,
   `profilePicture` mediumblob NOT NULL,
   `createdAt` timestamp NOT NULL,
-  PRIMARY KEY (`id`) USING BTREE
+  PRIMARY KEY (`id`) USING BTREE,
+  KEY `FK` (`id_roles`),
+  CONSTRAINT `FK` FOREIGN KEY (`id_roles`) REFERENCES `roles` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- Les données exportées n'étaient pas sélectionnées.

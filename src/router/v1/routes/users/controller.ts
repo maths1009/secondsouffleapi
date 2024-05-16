@@ -12,13 +12,20 @@ export const userController = {
       data: {
         email,
         password: await hashPassword(password),
-        id_role: idRole,
-        id_sales_point: idSalesPoint,
+        id_roles: idRole,
         name,
         profilePicture,
         createdAt: new Date().getTime().toString(),
       },
     })
+
+    await prisma.j_sales_users.create({
+      data: {
+        id_users: user.id,
+        id_sales_point: idSalesPoint,
+      },
+    })
+
     res.json(user)
   },
 }

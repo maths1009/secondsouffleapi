@@ -19,8 +19,9 @@ model products {
 }
 
 model roles {
-  id   Int    @id @default(autoincrement())
-  name String @db.VarChar(100)
+  id    Int     @id @default(autoincrement())
+  name  String  @db.VarChar(100)
+  users users[]
 }
 
 model salespoint {
@@ -34,12 +35,16 @@ model salespoint {
 
 model users {
   id             Int             @id @default(autoincrement())
+  id_roles       Int
   name           String          @db.VarChar(100)
   email          String          @db.VarChar(150)
   password       String          @db.VarChar(255)
   profilePicture Bytes           @db.MediumBlob
   createdAt      DateTime        @db.Timestamp(0)
   j_sales_users  j_sales_users[]
+  roles          roles           @relation(fields: [id_roles], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "FK")
+
+  @@index([id_roles], map: "FK")
 }
 
 model j_sales_products {
