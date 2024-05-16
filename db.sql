@@ -49,13 +49,13 @@ CREATE TABLE IF NOT EXISTS `j_sales_users` (
 CREATE TABLE IF NOT EXISTS `products` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(100) NOT NULL,
-  `picture` mediumblob NOT NULL,
+  `picture` mediumblob DEFAULT NULL,
   `quantity` int(11) NOT NULL,
   `color` varchar(8) NOT NULL,
   `material` varchar(100) NOT NULL,
   `description` text NOT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- Les données exportées n'étaient pas sélectionnées.
 
@@ -64,7 +64,7 @@ CREATE TABLE IF NOT EXISTS `roles` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(100) NOT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- Les données exportées n'étaient pas sélectionnées.
 
@@ -75,7 +75,7 @@ CREATE TABLE IF NOT EXISTS `salespoint` (
   `y` float NOT NULL,
   `x` float NOT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- Les données exportées n'étaient pas sélectionnées.
 
@@ -86,12 +86,12 @@ CREATE TABLE IF NOT EXISTS `users` (
   `name` varchar(100) NOT NULL,
   `email` varchar(150) NOT NULL,
   `password` varchar(255) NOT NULL,
-  `profilePicture` mediumblob NOT NULL,
+  `profilePicture` mediumblob DEFAULT NULL,
   `createdAt` timestamp NOT NULL,
   PRIMARY KEY (`id`) USING BTREE,
   KEY `FK` (`id_roles`),
   CONSTRAINT `FK` FOREIGN KEY (`id_roles`) REFERENCES `roles` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- Les données exportées n'étaient pas sélectionnées.
 
