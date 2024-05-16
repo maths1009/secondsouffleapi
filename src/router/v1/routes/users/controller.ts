@@ -1,4 +1,4 @@
-import { hashPassword } from '@utils/auth'
+import { checkToken, hashPassword } from '@utils/auth'
 
 import { prisma } from '@/app'
 
@@ -27,5 +27,33 @@ export const userController = {
     })
 
     res.json(user)
+  },
+  getUserSalesPointById: async (req: Request, res: Response) => {
+    const token = req.headers.authorization
+    const { id } = req.params
+    const { decodedToken } = checkToken(token!) // Is valid token because, the middleware already check the token
+    if (decodedToken?.userId !== id) {
+      return res.status(401).json({ message: 'unauthorized' })
+    }
+    const user = await prisma.users.findFirst({
+      where: { id: parseInt(id) },
+      include: {
+        j_sales_users: {
+          select: {
+            id_sales_point: true,
+          },
+        },
+      },
+    })
+    const idsSalesPoint = user?.j_sales_users.map(j => j.id_sales_point)
+    const salesPoint = await prisma.salespoint.findMany({
+      where: {
+        id: {
+          in: idsSalesPoint,
+        },
+      },
+    })
+
+    res.json(salesPoint)
   },
 }
