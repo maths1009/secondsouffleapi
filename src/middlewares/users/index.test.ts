@@ -48,6 +48,8 @@ describe('checkUserId', () => {
 
     expect(mockNext).not.toHaveBeenCalled()
     expect(res.status).toHaveBeenCalledWith(401)
-    expect(res.json).toHaveBeenCalledWith({ message: 'Unauthorized' })
+    expect(res.json).toHaveBeenCalledWith({
+      message: 'Unauthorized access - invalid user ID',
+    })
   })
 })

@@ -17,7 +17,7 @@ export const authenticateUser = (role?: Role): RequestHandler => {
     const authorizationHeader = req.headers.authorization
     if (!authorizationHeader || !authorizationHeader.startsWith('Bearer ')) {
       return res.status(401).json({
-        message: 'Unauthorized access - Missing token or incorrect format',
+        message: 'Unauthorized - Missing token or incorrect format',
       })
     }
     const { decodedToken, isValid } = checkToken(
@@ -26,7 +26,7 @@ export const authenticateUser = (role?: Role): RequestHandler => {
     if (!isValid || (role && decodedToken.userRole !== role)) {
       return res
         .status(401)
-        .json({ message: 'Unauthorized access - Invalid token' })
+        .json({ message: 'Unauthorized access - invalid role' })
     }
     next()
   }
