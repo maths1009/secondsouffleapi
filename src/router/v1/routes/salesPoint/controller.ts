@@ -43,13 +43,15 @@ export const salesPointController = {
           error: `The following product IDs do not exist: ${nonExistingProductIds.join(', ')}`,
         })
       }
-      const createdProducts = await prisma.j_sales_products.createMany({
+      await prisma.j_sales_products.createMany({
         data: products.map(p => ({
           id_sales_point: parseInt(id),
           id_products: p.id,
         })),
       })
-      res.json({ message: createdProducts })
+      res.json({
+        message: 'Successfully added products to sales point',
+      })
     } catch (error) {
       res
         .status(500)

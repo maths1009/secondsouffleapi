@@ -20,7 +20,7 @@ export const productsController = {
       res.json({ message: 'Products added successfully' })
     } catch (error) {
       res.status(500).json({
-        message: 'Error  while adding products',
+        message: 'Error while adding products',
       })
     }
   },
