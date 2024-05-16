@@ -8,6 +8,12 @@ export const userController = {
   addUser: async (req: Request, res: Response) => {
     const { email, password, idRole, idSalesPoint, name, profilePicture } =
       req.body
+    const existingUser = await prisma.users.findFirst({
+      where: { email },
+    })
+    if (existingUser) {
+      return res.status(400).json({ message: 'Email already exists' })
+    }
     const user = await prisma.users.create({
       data: {
         email,
