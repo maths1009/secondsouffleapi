@@ -10,7 +10,7 @@ datasource db {
 model products {
   id               Int                @id @default(autoincrement())
   name             String             @db.VarChar(100)
-  picture          Bytes              @db.MediumBlob
+  picture          Bytes?             @db.MediumBlob
   quantity         Int
   color            String             @db.VarChar(8)
   material         String             @db.VarChar(100)
