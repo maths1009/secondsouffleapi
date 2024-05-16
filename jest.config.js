@@ -9,5 +9,7 @@ module.exports = {
   moduleNameMapper: {
     '@type/(.*)': '<rootDir>/src/types/$1',
     '@utils/(.*)': '<rootDir>/src/utils/$1',
+    '@middlewares/(.*)': '<rootDir>/src/middlewares/$1',
+    '@/(.*)': '<rootDir>/src/$1',
   },
 }
