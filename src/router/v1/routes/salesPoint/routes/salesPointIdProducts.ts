@@ -2,14 +2,14 @@ import { authenticateUser } from '@middlewares/auth'
 
 import { Router } from 'express'
 
-import { userController } from '../controller'
+import { salesPointController } from '../controller'
 
 const router = Router()
 
-router.get(
-  '/:id/sales-point',
+router.post(
+  '/:id/products',
   authenticateUser(),
-  userController.getUserSalesPointById
+  salesPointController.getProductsBySalesPointId
 )
 
 export default router

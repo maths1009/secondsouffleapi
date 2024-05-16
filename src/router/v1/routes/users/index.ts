@@ -5,7 +5,7 @@ import UsersRoute from './routes/users'
 
 const router = Router()
 
-router.use('/users', UsersRoute)
-router.use('/users', UserIdSalesPointRoute)
+router.use(UsersRoute)
+router.use(UserIdSalesPointRoute)
 
 export default router
